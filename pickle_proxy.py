@@ -24,13 +24,13 @@ class PickleProxManager(object):
 
 
     def __overload(self, inst: object) -> None:
-        if self.stamp != os.stat(self.path).st_mtime:
-            try:
+        try:
+            if self.stamp != os.stat(self.path).st_mtime:
                 inst.__dict__ = pickle.load(open(self.path, "rb")) 
-            except:
-                pass
-            else:
-                self.stamp = os.stat(self.path).st_mtime
+        except:
+            pass
+        else:
+            self.stamp = os.stat(self.path).st_mtime
 
     def __load(self) -> object:
         inst = self.cls()
